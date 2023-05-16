@@ -29,12 +29,12 @@ function Comp({pgName}:{pgName:string}) {
     const columns: MUIDataTableColumnDef[] = useMemo(() => [
 
         {
-            name: 'id',
-            label: 'Id'
+            name: 'sno',
+            label: 'Sno'
         },
         {
             name: 'application',
-            label: 'application'
+            label: pgName
         }, {
             name: "",
             options: {
@@ -53,7 +53,7 @@ function Comp({pgName}:{pgName:string}) {
                 }
             }
         },
-    ], [getAppData, handleClick]);
+    ], [getAppData, handleClick, pgName]);
 
 
 
@@ -62,7 +62,7 @@ function Comp({pgName}:{pgName:string}) {
         try {
             axios.get(`https://engineering-task.elancoapps.com/api/${pgName}`).then(res => {
                 const newData = res.data.map(function (val: string, index: number) {
-                    return { id: index + 1, application: val };
+                    return { sno: index + 1, application: val };
                 })
                 debugger
                 setData(newData)
@@ -70,7 +70,7 @@ function Comp({pgName}:{pgName:string}) {
         } catch (error) {
 
         }
-    }, [])
+    }, [pgName])
 
     const mAppData = useMemo(() => appData, [appData])
 
